@@ -1,0 +1,45 @@
+l1 → l2,
+(l2 → l3 ∧ c) → ((a ∧ ¬b) ∨ (¬a ∧ b)),
+((a ∧ ¬b) ∨ (¬a ∧ b)) → (l2 → l3 ∧ c),
+l3 ∧ c → l4,
+l4 ∧ ¬b → err,
+l3 ∧ ¬c → dots
+    ⊢ l1 ∧ a → err
+{
+1. l1 → l2                                  premise
+2. (l2 → l3 ∧ c) → ((a ∧ ¬b) ∨ (¬a ∧ b))    premise
+3. ((a ∧ ¬b) ∨ (¬a ∧ b)) → (l2 → l3 ∧ c)    premise
+4. l3 ∧ c → l4                              premise
+5. l4 ∧ ¬b → err                            premise
+6. l3 ∧ ¬c → dots                           premise
+
+102. {
+    103. l1 ∧ a                             assume
+    104. l1                                 ∧e1 103
+    105. a                                  ∧e2 103
+    106. l2                                 →e 1 104
+
+    197. ¬b                                 premise // TODO
+    192. (a ∧ ¬b)                           ∧i 104 197
+    193. ((a ∧ ¬b) ∨ (¬a ∧ b))              ∨i1 192
+    194. (l2 → l3 ∧ c)                      →e 3 193
+    195. l3 ∧ c                             →e 194 106
+    196. l4                                 →e 4 195
+    198. l4 ∧ ¬b                            ∧i 196 197
+    199. err                                →e 5 198
+}
+101. l1 ∧ a → err                               →i 102
+
+// 999. l1 ^ err
+/*
+991. l3                                     premise // TODO: proof
+992. c                                      premise // TODO: proof
+993. l3 ∧ c                                 ∧i 991 992
+994. l4                                     →e 4 993
+995. ¬b                                     premise // TODO: proof
+996. l4 ∧ ¬b                                ∧i 994 995
+997. err                                    →e 5 996
+998. l1                                     premise // TODO, or should it be assumed
+999. l1 ^ err                               ∧i 998 997
+*/
+}

@@ -1,0 +1,58 @@
+// premises
+
+l1 → l2,
+(l2 → l3 ∧ c) → ((a ∧ ¬b) ∨ (¬a ∧ b)),
+((a ∧ ¬b) ∨ (¬a ∧ b)) → (l2 → l3 ∧ c),
+l3 ∧ c → l4,
+l4 ∧ ¬b → err,
+l3 ∧ ¬c → dots,
+l1 ∧ err,
+
+// model for satisfiability (is it correct to put this here?)
+a ∧ ¬b
+
+// conclusions
+⊢
+l1, l2, l3, l4,
+a, ¬b, c,
+err
+// dots: don't care
+
+//proof
+{
+1. l1 → l2                                  premise
+2. (l2 → l3 ∧ c) → ((a ∧ ¬b) ∨ (¬a ∧ b))    premise
+3. ((a ∧ ¬b) ∨ (¬a ∧ b)) → (l2 → l3 ∧ c)    premise
+4. l3 ∧ c → l4                              premise
+5. l4 ∧ ¬b → err                            premise
+6. l3 ∧ ¬c → dots                           premise
+7. l1 ∧ err                                 premise
+8. a ∧ ¬b                                   premise
+
+
+101. l1                                     ∧e1 7
+102. err                                    ∧e2 7
+103. l2                                     →e  1 101
+
+104. {
+    105. a ∧ ¬b                             assume
+    106. ((a ∧ ¬b) ∨ (¬a ∧ b))              ∨i1 105
+    107. (l2 → l3 ∧ c)                      →e 3 106
+    108. l3 ∧ c                             →e 107 103
+}
+109. a ∧ ¬b → l3 ∧ c                        →i 104
+
+110. {
+    111. a ∧ ¬b                             assume
+    112. l3 ∧ c                             →e 109 111
+    113. l4                                 →e 4 112
+}
+114. a ∧ ¬b → l4                            →i 110
+
+115. l3 ∧ c                                 →e 109 8
+116. l3                                     ∧e1 115
+117. c                                      ∧e2 115
+118. l4                                     →e 114 8
+119. a                                      ∧e1 8
+120. ¬b                                     ∧e2 8
+}

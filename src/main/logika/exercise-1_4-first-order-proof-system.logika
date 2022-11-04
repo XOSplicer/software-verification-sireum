@@ -1,0 +1,18 @@
+∀x ∀y ∀z g(x, y) ∧ g(y, z) → g(x, z),   // g is transitive
+∀x ∀y g(x, y) → g(y, x)                 // g is symmetric
+    ⊢ g(a, b) ∧ g(b, c) → g(c, a)
+{
+1. ∀x ∀y ∀z g(x, y) ∧ g(y, z) → g(x, z)     premise
+2. ∀x ∀y g(x, y) → g(y, x)                  premise
+102. {
+    103. g(a, b) ∧ g(b, c)                  assume
+    110. ∀y ∀z g(a, y) ∧ g(y, z) → g(a, z)  ∀e 1 a
+    109. ∀z g(a, b) ∧ g(b, z) → g(a, z)     ∀e 110 b
+    108. g(a, b) ∧ g(b, c) → g(a, c)        ∀e 109 c
+    107. g(a, c)                            →e 108 103
+    106. ∀y g(a, y) → g(y, a)               ∀e 2 a
+    105. g(a, c) → g(c, a)                  ∀e 106 c
+    104. g(c, a)                            →e 105 107
+}
+101. g(a, b) ∧ g(b, c) → g(c, a)             →i 102
+}
