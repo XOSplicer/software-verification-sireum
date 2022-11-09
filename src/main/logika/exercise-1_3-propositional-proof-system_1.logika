@@ -6,11 +6,17 @@ l1 → l2,
 l3 ∧ c → l4,
 l4 ∧ ¬b → err,
 l3 ∧ ¬c → dots,
-l1 ∧ err
+l1 ∧ err,
+
+// model for satisfiability (is it correct to put this here?)
+a ∧ ¬b
 
 // conclusions
 ⊢
-(l1 ∧ c ∧ a) → err
+l1, l2, l3, l4,
+a, ¬b, c,
+err
+// dots: don't care
 
 //proof
 {
@@ -21,6 +27,7 @@ l1 ∧ err
 5. l4 ∧ ¬b → err                            premise
 6. l3 ∧ ¬c → dots                           premise
 7. l1 ∧ err                                 premise
+8. a ∧ ¬b                                   premise
 
 
 101. l1                                     ∧e1 7
@@ -42,11 +49,10 @@ l1 ∧ err
 }
 114. a ∧ ¬b → l4                            →i 110
 
-115. {
-    116. (l1 ∧ c ∧ a)                       assume
-    117. err                                ∧e2 7
-}
-
-118. (l1 ∧ c ∧ a) → err                     →i 115
-
+115. l3 ∧ c                                 →e 109 8
+116. l3                                     ∧e1 115
+117. c                                      ∧e2 115
+118. l4                                     →e 114 8
+119. a                                      ∧e1 8
+120. ¬b                                     ∧e2 8
 }
