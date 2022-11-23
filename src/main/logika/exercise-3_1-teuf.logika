@@ -1,0 +1,39 @@
+// Premises
+
+// Axioms of TEUF
+∀x eq(x, x),                                // eq is reflexive
+∀x ∀y eq(x, y) → eq(y, x),                  // eq is symmetric
+∀x ∀y ∀z eq(x, y) ∧ eq(y, z) → eq(x, z),    // eq is transitive
+∀x ∀y eq(x, y) →  eq(f(x), f(y))            // f has congruence
+
+// Conclusions
+⊢
+eq(f(a), a) → eq(f(f(a)), a)
+
+// Proof
+{
+1. ∀x eq(x, x)                                  premise     // eq is reflexive
+2. ∀x ∀y eq(x, y) → eq(y, x)                    premise     // eq is symmetric
+3. ∀x ∀y ∀z eq(x, y) ∧ eq(y, z) → eq(x, z)      premise     // eq is transitive
+4. ∀x ∀y eq(x, y) →  eq(f(x), f(y))             premise     // f has congruence
+
+198. {
+    100. eq(f(a), a)                                            assume
+
+    101. eq(a, a)                                               ∀e 1 a
+    102. eq(f(a), f(a))                                         ∀e 1 f(a)
+    103. eq(f(f(a)), f(f(a)))                                   ∀e 1 f(f(a))
+
+    104. ∀y eq(f(a), y) →  eq(f(f(a)), f(y))                    ∀e 4 f(a)
+    105. eq(f(a), a) → eq(f(f(a)), f(a))                        ∀e 104 a
+    106. eq(f(f(a)), f(a))                                      →e 105 100
+    107. eq(f(f(a)), f(a)) ∧ eq(f(a), a)                        ∧i 106 100
+    108. ∀y ∀z eq(f(f(a)), y) ∧ eq(y, z) → eq(f(f(a)), z)       ∀e 3 f(f(a))
+    109. ∀z eq(f(f(a)), f(a)) ∧ eq(f(a), z) → eq(f(f(a)), z)    ∀e 108 f(a)
+    110. eq(f(f(a)), f(a)) ∧ eq(f(a), a) → eq(f(f(a)), a)       ∀e 109 a
+
+    197. eq(f(f(a)), a)                                         →e 110 107
+}
+
+199. eq(f(a), a) → eq(f(f(a)), a)               →i 198
+}
